@@ -1,14 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { Provider } from 'react-redux';
+import { configureStore } from 'redux/store';
+import { SettingsProvider } from 'context/SettingsContext';
+import { restoreSettings } from 'utils/settings';
 import * as serviceWorker from './serviceWorker';
+import App from './App';
+
+const store = configureStore();
+const settings = restoreSettings();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <Provider store={store}>
+            <SettingsProvider settings={settings}>
+                <App />
+            </SettingsProvider>
+        </Provider>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

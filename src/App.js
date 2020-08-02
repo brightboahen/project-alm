@@ -1,26 +1,60 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
+import { createBrowserHistory } from 'history';
+import {
+    createStyles,
+    jssPreset,
+    makeStyles,
+    StylesProvider,
+    ThemeProvider,
+    createMuiTheme
+} from '@material-ui/core';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
+import Routes from 'routes';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const history = createBrowserHistory();
+
+const useStyles = makeStyles(() =>
+    createStyles({
+        '@global': {
+            '*': {
+                boxSizing: 'border-box',
+                margin: 0,
+                padding: 0
+            },
+            html: {
+                '-webkit-font-smoothing': 'antialiased',
+                '-moz-osx-font-smoothing': 'grayscale',
+                height: '100%',
+                width: '100%'
+            },
+            body: {
+                height: '100%',
+                width: '100%'
+            },
+            '#root': {
+                height: '100%',
+                width: '100%'
+            }
+        }
+    })
+);
+
+const App = () => {
+    useStyles();
+    return (
+        <ThemeProvider theme={createMuiTheme({})}>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+                <SnackbarProvider maxSnack={1}>
+                    <Router history={history}>
+                        <Routes />
+                    </Router>
+                </SnackbarProvider>
+            </MuiPickersUtilsProvider>
+        </ThemeProvider>
+    );
+};
 
 export default App;
