@@ -1,20 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
-import { createBrowserHistory } from 'history';
 import {
     createStyles,
-    jssPreset,
+    //jssPreset,
     makeStyles,
-    StylesProvider,
+    //StylesProvider,
     ThemeProvider,
     createMuiTheme
 } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import Routes from 'routes';
-
-const history = createBrowserHistory();
+import Auth from 'components/Auth';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -48,8 +46,10 @@ const App = () => {
         <ThemeProvider theme={createMuiTheme({})}>
             <MuiPickersUtilsProvider utils={MomentUtils}>
                 <SnackbarProvider maxSnack={1}>
-                    <Router history={history}>
-                        <Routes />
+                    <Router>
+                        <Auth>
+                            <Routes />
+                        </Auth>
                     </Router>
                 </SnackbarProvider>
             </MuiPickersUtilsProvider>

@@ -1,0 +1,33 @@
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+import SplashScreen from 'components/SplashScreen';
+// import { setUserData, logout } from 'src/actions/accountActions';
+// import authService from 'src/services/authService';
+import { setUser } from 'redux/actions/userActions';
+
+function Auth({ children }) {
+    const dispatch = useDispatch();
+    const [isLoading, setLoading] = useState(true);
+
+    useEffect(() => {
+        console.log('Effect called');
+        const initAuth = async () => {
+            dispatch(setUser({ name: 'bright' }));
+            setLoading(false);
+        };
+        initAuth();
+    }, [dispatch]);
+
+    if (isLoading) {
+        return <SplashScreen />;
+    }
+
+    return children;
+}
+
+Auth.propTypes = {
+    children: PropTypes.any
+};
+
+export default Auth;
